@@ -23,16 +23,34 @@ try {
    let randomWords= pushingRandomWords();
     res.json({msg:"success",data:randomWords})
 } catch (error) {
-    console.log(error.message,"oooooo");
+    console.log(error.message);
     res.status(500).json({msg:error.message,})
 }
 
-    
-
-
 
 }
 
+const findRank=(req,res)=>{
+
+    try {
+        const {finalScore}=req.body;
+        if(!finalScore) res.status(400).json({msg:"faild Score is missing"});
+        let belowScore=0;
+        scoresList.map((score)=>{
+            if(score<finalScore){
+                belowScore++
+            }
+        });
+        let Rank = (belowScore * 100)/30;
+
+        res.json({msg:"Success",data:+Rank.toFixed(2)})
+
+        
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({msg:error.message,})
+    }
+}
 
 
 
@@ -76,4 +94,4 @@ function pushingRandomWords(){
 
 }
 
-module.exports={fetchingWordsList}
+module.exports={fetchingWordsList,findRank}

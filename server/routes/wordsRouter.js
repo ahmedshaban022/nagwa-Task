@@ -1,9 +1,10 @@
 const express=require("express");
-const { fetchingWordsList } = require("../controller/wordsCtr");
+const { fetchingWordsList, findRank } = require("../controller/wordsCtr");
 const router=express.Router();
 
 
 router.get("/",fetchingWordsList);
+router.post("/",findRank);
 
 
 module.exports=router;
