@@ -8,19 +8,21 @@ const Rank = () => {
     const [callBack,setCallBack]=state.callBack;
     const [score,setScore]=state.score;
 
-    const handTryAgain=()=>{
-      setCallBack(!callBack);
+    
+    const handleTryAgain=()=>{
+      
+      setCallBack(!callBack); // to reCall the api and change the words list with other on the Context
       setRank(0);
       setScore(0);
 
     }
   return (
     <div className='my-3 p-3 bg-light fw-bold '>
-      <p className='p-3'>
-       Your Rank Is Better Than <span className='text-danger'>{rank}%</span> From Your Friends   
+      <p className='p-3 fs-3'>
+       Your Rank Is Better Than <span className='text-success'>{rank}%</span> From Peers  
       </p>
       <div>
-        <button className='btn btn-success' onClick={handTryAgain}>Try Again</button>
+        <button className='btn btn-success fw-bold' onClick={handleTryAgain}>Try Again</button>
       </div>
       </div>
   )

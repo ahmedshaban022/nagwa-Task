@@ -15,6 +15,7 @@ const WordsQuestions = () => {
     const [answered,setAnsewred]=useState(false);
     const [next,setNext]=useState(false);
     const [selectedWord,setSelectedWord]=useState(0);
+    const [progressCtr,setProgressCtr]=useState(0);
 
     // buttons refernses
     const nounBtn=useRef();
@@ -22,19 +23,26 @@ const WordsQuestions = () => {
     const adverbBtn=useRef();
     const adjectiveBtn=useRef();
 
+
+    // on click the ansewers buttons
+
     const handleOnClick=(btnRef)=>{
+        // to disable ansewering more than 1 time on the same question
         if(answered) return false;
+
+        // check of the ansewr is right
         if(btnRef.current.name===wordsList[selectedWord].pos)
         {
             btnRef.current.style.backgroundColor="green";
             setAnsewred(true);
             setScore(score+1);
         }else{
-            
+
+            // make the background of the answer button  red 
             btnRef.current.style.backgroundColor="red";
             setAnsewred(true);
         
-                    // finding the right answer 
+                    // finding the right answer  and make the background green
                     if(nounBtn.current.name===wordsList[selectedWord].pos)
                     nounBtn.current.style.backgroundColor="green";
 
@@ -49,13 +57,17 @@ const WordsQuestions = () => {
             
         }
         setNext(true);
+        setProgressCtr(progressCtr+1);
         
     }
+
+
 const handleNext=async()=>{
+    // send request to the end point with score after the all of the qustion are ansewred 
     if(selectedWord>=wordsList.length-1){
        try {
         let {data}=await axios.post('/api/',{finalScore:(score/wordsList.length)*100});
-        console.log(data);
+        
          setRank(data.data);
        } catch (err) {
         toast.error(err.response.data.msg)
@@ -66,6 +78,7 @@ const handleNext=async()=>{
         setSelectedWord(selectedWord+1);
         setAnsewred(false);
         setNext(false);
+        // cleaning the ansewers buttons background colors (feedBack) 
         nounBtn.current.style.backgroundColor="";
         verbBtn.current.style.backgroundColor="";
         adverbBtn.current.style.backgroundColor="";
@@ -76,14 +89,14 @@ const handleNext=async()=>{
   return (
     <div className='container mt-3 p-3 m-auto bg-light '>
        <div className=' m-3 p-3'>
-        <div className='my-2'>
-            <span className='text-muted fw-bold'>{(selectedWord/wordsList.length)*100}%</span>
-        <Progress progressPercentage={(selectedWord/wordsList.length)*100}/>
+        <div className='mb-2'>
+           
+        <Progress progressPercentage={(progressCtr/wordsList.length)*100}/>
         </div>
         <div className='my-3'>
                 
-            <p className='text-muted '>Click on the Right Answer </p>
-            <p className='fs-2 fw-bold '> { wordsList && wordsList[selectedWord].word}</p>
+            <p className='text-secondary fw-bold '> Part Of Speach Test </p>
+            <p className='fs-1 fw-bold text-danger'> { wordsList && wordsList[selectedWord].word}</p>
         </div>
        
         <div className='btns mt-5'>
