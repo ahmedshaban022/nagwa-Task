@@ -9,7 +9,7 @@ export const Globalstate = createContext();
 
 export const DataProvider =({children})=>{
     const [wordsList,setWordsList]=useState([]);
-    const [rank,setRank]=useState();
+    const [rankPage,setRankPage]=useState();
     const [callBack,setCallBack]=useState(false);
     const [score,setScore]=useState(0);
 
@@ -28,7 +28,7 @@ export const DataProvider =({children})=>{
    
     const state={
       wordsList:[wordsList,setWordsList],
-      rank:[rank,setRank],
+      rank:[rankPage,setRankPage],
       score:[score,setScore],
       callBack:[callBack,setCallBack],
     }

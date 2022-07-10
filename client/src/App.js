@@ -8,12 +8,14 @@ import { DataProvider } from './GlobalState';
 import Header from './components/Header';
 
 
+
 function App() {
   return (
     <div className="App">
       <DataProvider >
     <Header/>
      <Home/>
+        
 
      <ToastContainer
           position="top-left"

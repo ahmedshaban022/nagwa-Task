@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 import { Globalstate } from '../GlobalState';
+
 import Progress from './Progress'
 
 const WordsQuestions = () => {
@@ -10,7 +11,7 @@ const WordsQuestions = () => {
     // global states
     const state=useContext(Globalstate);
     const [wordsList,setWordsList]=state.wordsList;
-    const [rank,setRank]=state.rank;
+    const [rankPage,setRankPage]=state.rank;
     const [score,setScore]=state.score;
     const [answered,setAnsewred]=useState(false);
     const [next,setNext]=useState(false);
@@ -65,13 +66,9 @@ const WordsQuestions = () => {
 const handleNext=async()=>{
     // send request to the end point with score after the all of the qustion are ansewred 
     if(selectedWord>=wordsList.length-1){
-       try {
-        let {data}=await axios.post('/api/',{finalScore:(score/wordsList.length)*100});
-        
-         setRank(data.data);
-       } catch (err) {
-        toast.error(err.response.data.msg)
-       }
+      
+        setRankPage(true);
+     
         return false;
     } else{
 
@@ -90,7 +87,7 @@ const handleNext=async()=>{
     <div className='container mt-3 p-3 m-auto bg-light '>
        <div className=' m-3 p-3'>
         <div className='mb-2'>
-           
+          
         <Progress progressPercentage={(progressCtr/wordsList.length)*100}/>
         </div>
         <div className='my-3'>
